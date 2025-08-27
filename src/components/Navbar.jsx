@@ -8,7 +8,6 @@ const Navbar = () => {
   const { totalPrice } = useContext( CartContext );
   const { token, logout } = useContext(UserContext);
 
-
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
       <a className="navbar-brand" href="#">🍕 Mamma Mía</a>

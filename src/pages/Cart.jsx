@@ -1,14 +1,54 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartProvider";
 import { UserContext } from "../context/UserProvider";
+import axios from "axios";
 //import { pizzaCart, pizzas } from "../data/pizzas";
 
 
 export const Cart = () => {
     //const [cart, setCart] = useState(pizzaCart);
 
-    const { cart, totalPrice, actulizarCant } = useContext(CartContext);
+    const { cart, totalPrice, actulizarCant, limpiarCarrito } = useContext(CartContext);
     const { token } = useContext(UserContext);
+
+    const procesarCarrito = async () => {
+        try {
+
+            if (!token) {
+                alert('No se ha iniciado sesión. No puede procesar su carrito.');
+                return;
+            }
+
+            if (cart.length === 0) {
+                alert('No hay productos en su carrito.');
+                return;
+            }
+
+            const response = await axios({
+                url: 'http://localhost:5000/api/checkouts',
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                data: { cart }
+            });
+
+            const data = await response.data;
+            if (!data?.message) {
+                alert('Error procesando carrito, intente nuevamente');
+                return;
+            }
+
+            alert('Compra realizada con éxito!');
+            limpiarCarrito();
+            return;
+        
+        } catch (error) {
+            console.log('Error procesando carrito: ', error);
+            alert('Error procesando carrito, intente nuevamente');
+        }
+    }
 
     return (
         <div className="container my-4">
@@ -38,7 +78,11 @@ export const Cart = () => {
                     </div>)
             }
             <h5 className="mt-4">Total: ${totalPrice}</h5>
-            <button className="btn btn-dark mt-2" disabled={!token} >
+            <button
+                className="btn btn-dark mt-2"
+                disabled={!token}
+                onClick={ procesarCarrito }
+            >
                 Pagar
             </button>
         </div>

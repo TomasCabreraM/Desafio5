@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserProvider";
 
 export const Registro = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const { register } = useContext(UserContext);
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -25,7 +28,7 @@ export const Registro = () => {
             return;
         }
 
-        alert("Usuario registrado exitosamente!");
+        register({ email, password });
 
     }
 

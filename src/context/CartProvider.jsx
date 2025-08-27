@@ -44,6 +44,10 @@ const CartProvider = ({ children }) => {
 
   }
 
+  const limpiarCarrito = () => {
+    setCart([]);
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -51,7 +55,8 @@ const CartProvider = ({ children }) => {
         setCart,
         totalPrice,
         actulizarCant,
-        actualizarCarrito
+        actualizarCarrito,
+        limpiarCarrito
       }}
     >
       {children}

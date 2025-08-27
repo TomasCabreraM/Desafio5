@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../context/UserProvider";
 
 export const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { login } = useContext(UserContext);
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -19,7 +21,7 @@ export const Login = () => {
             return;
         }
 
-        alert("Inicio de sesion exitoso!");
+        login({ email, password });
 
     }
 
