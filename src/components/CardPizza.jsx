@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartProvider";
+import { NavLink } from "react-router-dom";
 
 const CardPizza = ({ pizza }) => {
 
@@ -14,7 +15,9 @@ const CardPizza = ({ pizza }) => {
           <p><strong>Ingredientes:</strong> {pizza.ingredients.join(', ')}</p>
           <p><strong>Precio:</strong> ${pizza.price.toLocaleString('es-CL') || 0}</p>
           <div className="d-flex justify-content-between">
-            <button className="btn btn-sm btn-info">Ver más</button>
+            <NavLink to={`/pizza/${pizza.id}`} className="btn btn-sm btn-info">
+                Ver más
+            </NavLink>
             <button
               className="btn btn-sm btn-success"
               onClick={ () => actualizarCarrito(pizza) }

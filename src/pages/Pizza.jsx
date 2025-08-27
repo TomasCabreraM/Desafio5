@@ -1,19 +1,23 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { CartContext } from "../context/CartProvider";
 
 export const Pizza = () => {
-    const [pizza, setPizza] = useState([]);
 
-    async function consumirAPI() {
-        const respuesta = await axios.get("http://localhost:5000/API/pizzas/P001")
+    const { actualizarCarrito } = useContext(CartContext);
+    const [pizza, setPizza] = useState([]);
+    const { id } = useParams()
+
+    async function obtenerPizza() {
+        const respuesta = await axios.get(`http://localhost:5000/API/pizzas/${ id }`)
         const dataAPI = await respuesta.data
         console.log(dataAPI.ingredients)
         setPizza(dataAPI)
     }
 
     useEffect(() => {
-        consumirAPI()
-
+        obtenerPizza()
     }, [])
 
     return (
@@ -39,7 +43,9 @@ export const Pizza = () => {
                             ))}
                         </ul>
                         <p className="card-text flex-grow-1">{pizza.desc}</p>
-                        <button className="btn btn-primary mt-2">Agregar al carrito</button>
+                        <button className="btn btn-primary mt-2" onClick={ () => actualizarCarrito(pizza) }>
+                            Agregar al carrito
+                        </button>
                     </div>
                 </div>
             </div>

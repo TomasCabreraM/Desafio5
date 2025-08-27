@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartProvider";
+import { UserContext } from "../context/UserProvider";
 //import { pizzaCart, pizzas } from "../data/pizzas";
 
 
@@ -7,6 +8,7 @@ export const Cart = () => {
     //const [cart, setCart] = useState(pizzaCart);
 
     const { cart, totalPrice, actulizarCant } = useContext(CartContext);
+    const { token } = useContext(UserContext);
 
     return (
         <div className="container my-4">
@@ -36,7 +38,9 @@ export const Cart = () => {
                     </div>)
             }
             <h5 className="mt-4">Total: ${totalPrice}</h5>
-            <button className="btn btn-dark mt-2">Pagar</button>
+            <button className="btn btn-dark mt-2" disabled={!token} >
+                Pagar
+            </button>
         </div>
     );
 };
