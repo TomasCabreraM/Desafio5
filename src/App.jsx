@@ -8,13 +8,18 @@ import { Pizza } from './pages/Pizza';
 import { Route, Routes } from 'react-router-dom';
 import { NotFound } from './pages/NotFound';
 import { Profile } from './pages/Profile';
+import DataPizzasProvider from './context/DataPizzasProvider';
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/" element={
+          <DataPizzasProvider>
+            <Home/>
+          </DataPizzasProvider>
+        }/>
         <Route path="/register" element={<Registro/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/cart" element={<Cart/>}/>

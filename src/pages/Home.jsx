@@ -1,22 +1,16 @@
 import Header from '../components/Header';
 import CardPizza from '../components/CardPizza';
 // import { pizzas } from '../data/pizzas';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { DataPizzaContext } from '../context/DataPizzasProvider';
 
 const Home = () => {
-  const [pizzas, setPizzas] = useState([]);
-  async function consumirAPI() {
-    const respuesta = await axios.get("http://localhost:5000/API/pizzas")
-    const dataAPI = await respuesta.data
-    console.log(dataAPI)
-    setPizzas(dataAPI)
-  }
+  
+  const { pizzas, consumirAPI } = useContext(DataPizzaContext);
 
   useEffect(() => {
     consumirAPI()
-  }, [])
-  
+  }, []);
 
   return (
     <div className="container my-4">
@@ -25,10 +19,7 @@ const Home = () => {
         {
           pizzas.map(pizza => <CardPizza
             key={pizza.id}
-            name={pizza.name}
-            price={pizza.price}
-            ingredients={pizza.ingredients}
-            img={pizza.img}
+            pizza={pizza}
           />)
         }
         {/* <CardPizza

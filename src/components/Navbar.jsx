@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartProvider";
 
 const Navbar = () => {
-  const total = 25000;
   const token = true;
+
+  const { totalPrice } =useContext( CartContext );
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
@@ -20,7 +23,7 @@ const Navbar = () => {
                     <Link className="btn btn-outline-primary" to="/register">Registro</Link>
           </>
         )}
-        <Link className="btn btn-outline-dark" to="/cart">🛒 Total: ${total.toLocaleString('es-CL')}</Link>
+        <Link className="btn btn-outline-dark" to="/cart">🛒 Total: ${totalPrice.toLocaleString('es-CL')}</Link>
       </div>
     </nav>
   );
